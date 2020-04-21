@@ -1,7 +1,17 @@
+# public-facing api for app
+
+# import * from './generated/prisma.graphql'
+
 type Mutation {
-    hi: String
+	createItem(
+		title: String
+		desc: String
+		image: String
+		largeImg: String
+		price: Int
+	): Item!
 }
 
 type Query {
-    hi: String
+	items: [Item]!
 }
