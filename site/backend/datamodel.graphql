@@ -1,5 +1,18 @@
+# Run deploy to generate interfaces in src/generated
+
 type User {
-  id: ID! @id
-  name: String!
-  email: String!
+	id: ID! @id
+	name: String!
+	email: String!
+}
+
+type Item {
+	id: ID! @id @unique
+	title: String!
+	desc: String!
+	image: String!
+	largeImg: String
+	price: Int!
+	createdAt: DateTime! @createdAt
+	updatedAt: DateTime! @updatedAt
 }
