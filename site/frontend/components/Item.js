@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import ItemStyles from './styles/ItemStyles';
+import DeleteItem from './DeleteItem';
 import PriceTag from './styles/PriceTag';
 import Title from './styles/Title';
 
@@ -27,10 +28,10 @@ const Item = (props) => {
 			<p>{desc}</p>
 			<div className='buttonList'>
 				<Link href={{ pathname: 'update', query: { id } }}>
-					<a>Edit</a>
+					<a>Edit Item</a>
 				</Link>
 				<button>Add to cart</button>
-				<button>Delete</button>
+				<DeleteItem id={id}>Delete Item</DeleteItem>
 			</div>
 		</ItemStyles>
 	);
