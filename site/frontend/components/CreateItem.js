@@ -11,14 +11,35 @@ const CreateItem = (props) => {
 		desc: '',
 		image: '',
 		largeImg: '',
-		price: 0,
+		price: '',
 	});
 
 	const updateInput = (e) => {
 		const {
-			target: { name, value },
+			target: { name, type, value },
 		} = e;
-		setItemDetails({ ...item, [name]: value });
+		const val = type === 'number' ? parseFloat(value) : value;
+		setItemDetails({ ...item, [name]: val });
+	};
+
+	const uploadImage = async (e) => {
+		const files = e.target.files;
+		const data = new FormData();
+		data.append('file', files[0]);
+		data.append('upload_preset', 'storeApp');
+		console.log(data.getAll('file'));
+		const res = await fetch(
+			'https://api.cloudinary.com/v1_1/jakefromsnakefarm/image/upload',
+			{
+				method: 'POST',
+				body: data,
+			}
+		);
+		const file = await res.json();
+		setItemDetails({
+			image: file.secure_url,
+			largeImg: file.eager[0].secure_url,
+		});
 	};
 
 	return (
@@ -36,6 +57,19 @@ const CreateItem = (props) => {
 				>
 					<h2>Sell Item</h2>
 					<fieldset disabled={loading} aria-busy={loading}>
+						<label htmlFor='image'>
+							Add Image
+							<input
+								type='file'
+								id='file'
+								name='image'
+								placeholder='Add an image'
+								onChange={(e) => uploadImage(e)}
+							/>
+							{item.image && (
+								<img width='160px' src={item.image} alt='Image preview' />
+							)}
+						</label>
 						<label htmlFor='title'>
 							Title
 							<input
@@ -51,7 +85,7 @@ const CreateItem = (props) => {
 						<label htmlFor='price'>
 							Price
 							<input
-								type='text'
+								type='number'
 								id='price'
 								name='price'
 								placeholder='Price'
