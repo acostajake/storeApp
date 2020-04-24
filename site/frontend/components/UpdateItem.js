@@ -1,4 +1,3 @@
-import Router from 'next/router';
 import React, { useState } from 'react';
 import { Mutation, Query } from 'react-apollo';
 
