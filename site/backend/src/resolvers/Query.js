@@ -4,12 +4,13 @@ const { forwardTo } = require('prisma-binding');
 
 const Query = {
 	// easy forward, use when no auth req, no validation, no filtering, etc
-	// items: forwardTo('db')
+	items: forwardTo('db'),
+	item: forwardTo('db'),
 
-	async items(parent, args, ctx, info) {
-		const items = ctx.db.query.items();
-		return items;
-	},
+	// async items(parent, args, ctx, info) {
+	// 	const items = ctx.db.query.items();
+	// 	return items;
+	// },
 };
 
 module.exports = Query;

@@ -5,7 +5,7 @@ import { Mutation } from 'react-apollo';
 import { CREATE_ITEM_MUTATION } from '../lib/queries';
 import Form from './styles/Form';
 
-const CreateItem = (props) => {
+const CreateItem = () => {
 	const [item, setItemDetails] = useState({
 		title: '',
 		desc: '',

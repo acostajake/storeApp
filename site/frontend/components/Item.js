@@ -26,7 +26,7 @@ const Item = (props) => {
 			<PriceTag>${price}</PriceTag>
 			<p>{desc}</p>
 			<div className='buttonList'>
-				<Link href={{ pathname: 'update', query: id }}>
+				<Link href={{ pathname: 'update', query: { id } }}>
 					<a>Edit</a>
 				</Link>
 				<button>Add to cart</button>
