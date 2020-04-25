@@ -1,5 +1,7 @@
 import gql from 'graphql-tag';
 
+import { perPage } from '../config';
+
 export const CREATE_ITEM_MUTATION = gql`
 	mutation CREATE_ITEM_MUTATION(
 		$title: String!
@@ -45,8 +47,8 @@ export const UPDATE_ITEM_MUTATION = gql`
 `;
 
 export const GET_ALL_ITEMS = gql`
-	query GET_ALL_ITEMS {
-		items {
+	query GET_ALL_ITEMS($skip: Int = 0, $first: Int = ${perPage}) {
+		items(first: $first, skip: $skip, orderBy: createdAt_DESC) {
 			id
 			title
 			desc
@@ -64,6 +66,27 @@ export const GET_ITEM = gql`
 			title
 			desc
 			price
+		}
+	}
+`;
+
+export const GET_ITEM_WITH_IMAGE = gql`
+	query GET_ITEM_WITH_IMAGE($id: ID!) {
+		item(where: { id: $id }) {
+			id
+			title
+			desc
+			largeImg
+		}
+	}
+`;
+
+export const PAGINATION_QUERY = gql`
+	query PAGINATION_QUERY {
+		itemsConnection {
+			aggregate {
+				count
+			}
 		}
 	}
 `;
