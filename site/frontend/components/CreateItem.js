@@ -27,7 +27,6 @@ const CreateItem = () => {
 		const data = new FormData();
 		data.append('file', files[0]);
 		data.append('upload_preset', 'storeApp');
-		console.log(data.getAll('file'));
 		const res = await fetch(
 			'https://api.cloudinary.com/v1_1/jakefromsnakefarm/image/upload',
 			{
@@ -79,7 +78,7 @@ const CreateItem = () => {
 								placeholder='Title'
 								required
 								onChange={(e) => updateInput(e)}
-								value={item.value}
+								value={item.title}
 							/>
 						</label>
 						<label htmlFor='price'>

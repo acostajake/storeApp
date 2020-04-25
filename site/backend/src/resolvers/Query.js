@@ -6,6 +6,7 @@ const Query = {
 	// easy forward, use when no auth req, no validation, no filtering, etc
 	items: forwardTo('db'),
 	item: forwardTo('db'),
+	itemsConnection: forwardTo('db'),
 
 	// async items(parent, args, ctx, info) {
 	// 	const items = ctx.db.query.items();
