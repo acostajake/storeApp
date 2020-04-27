@@ -4,51 +4,40 @@ import { Mutation } from 'react-apollo';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 
-import { CURRENT_USER, SIGNUP_MUTATION } from '../lib/queries';
+import { CURRENT_USER, SIGNIN_MUTATION } from '../lib/queries';
 
-const Signup = () => {
-	const [signupVals, setVals] = useState({
-		name: '',
+const Signin = () => {
+	const [signinVals, setVals] = useState({
 		email: '',
 		password: '',
 	});
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
-		setVals({ ...signupVals, [name]: value });
+		setVals({ ...signinVals, [name]: value });
 	};
 
-	const { name, email, password } = signupVals;
+	const { email, password } = signinVals;
 
 	return (
 		<Mutation
-			mutation={SIGNUP_MUTATION}
-			variables={signupVals}
+			mutation={SIGNIN_MUTATION}
+			variables={signinVals}
 			refetchQueries={[{ query: CURRENT_USER }]}
 		>
-			{(signup, { error, loading }) => {
+			{(signin, { error, loading }) => {
 				return (
 					<Form
 						method='POST'
 						onSubmit={async (e) => {
 							e.preventDefault();
-							await signup();
-							setVals({ name: '', email: '', password: '' });
+							await signin();
+							setVals({ email: '', password: '' });
 						}}
 					>
 						<fieldset disabled={loading} aria-busy={loading}>
 							<h2>Create an account</h2>
 							<Error error={error} />
-							<label htmlFor='name'>
-								name
-								<input
-									type='text'
-									name='name'
-									placeholder='Jakey-Baby'
-									value={name}
-									onChange={(e) => handleChange(e)}
-								/>
-							</label>
 							<label htmlFor='email'>
 								email
 								<input
@@ -69,7 +58,7 @@ const Signup = () => {
 									onChange={(e) => handleChange(e)}
 								/>
 							</label>
-							<button type='submit'>Sign up</button>
+							<button type='submit'>Log in</button>
 						</fieldset>
 					</Form>
 				);
@@ -78,4 +67,4 @@ const Signup = () => {
 	);
 };
 
-export default Signup;
+export default Signin;
