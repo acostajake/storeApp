@@ -90,3 +90,29 @@ export const PAGINATION_QUERY = gql`
 		}
 	}
 `;
+
+// Auth
+export const SIGNUP_MUTATION = gql`
+	mutation SIGNUP_MUTATION(
+		$name: String!
+		$email: String!
+		$password: String!
+	) {
+		signup(name: $name, email: $email, password: $password) {
+			id
+			name
+			email
+		}
+	}
+`;
+
+export const CURRENT_USER = gql`
+	query {
+		me {
+			id
+			email
+			name
+			permissions
+		}
+	}
+`;
