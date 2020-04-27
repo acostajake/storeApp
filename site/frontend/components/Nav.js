@@ -1,32 +1,41 @@
 import Link from 'next/link';
 
 import NavStyles from './styles/NavStyles';
+import Signout from './Signout';
 import User from './User';
 
 const Nav = () => (
-	<NavStyles>
-		<User>
-			{({ data: { me } }) => {
-				if (me) return <p>{me.name}</p>;
-				return null;
-			}}
-		</User>
-		<Link href='/store'>
-			<a>Store</a>
-		</Link>
-		<Link href='/sell'>
-			<a>Sell</a>
-		</Link>
-		<Link href='/signup'>
-			<a>Signup</a>
-		</Link>
-		<Link href='/orders'>
-			<a>Orders</a>
-		</Link>
-		<Link href='/profile'>
-			<a>Profile</a>
-		</Link>
-	</NavStyles>
+	<User>
+		{({ data: { me } }) => (
+			<>
+				<NavStyles>
+					<Link href='/store'>
+						<a>Store</a>
+					</Link>
+					{me && (
+						<>
+							<Link href='/sell'>
+								<a>Sell</a>
+							</Link>
+							<Link href='/signup'>
+								<a>Signup</a>
+							</Link>
+							<Link href='/orders'>
+								<a>Orders</a>
+							</Link>
+							<div>{`Logged in as ${me.name}`}</div>
+							<Signout />
+						</>
+					)}
+					{!me && (
+						<Link href='/signup'>
+							<a>Log in / Sign Up</a>
+						</Link>
+					)}
+				</NavStyles>
+			</>
+		)}
+	</User>
 );
 
 export default Nav;
