@@ -39,7 +39,7 @@ const Signin = () => {
 							<h2>Create an account</h2>
 							<Error error={error} />
 							<label htmlFor='email'>
-								email
+								Email
 								<input
 									type='email'
 									name='email'
@@ -49,7 +49,7 @@ const Signin = () => {
 								/>
 							</label>
 							<label htmlFor='password'>
-								password
+								Password
 								<input
 									type='password'
 									name='password'
