@@ -1,9 +1,24 @@
 # Run deploy to generate interfaces in src/generated
 
+# Preset list of possible options for type
+enum Permission {
+	ADMIN
+	USER
+	SELLER
+	ITEMCREATE
+	ITEMUPDATE
+	ITEMDELETE
+	PERMISSIONUPDATE
+}
+
 type User {
-	id: ID! @id
+	id: ID! @id @unique
 	name: String!
-	email: String!
+	email: String! @unique
+	password: String!
+	resetToken: String
+	resetTokenExpiry: Float
+	permissions: [Permission] @scalarList(strategy: RELATION)
 }
 
 type Item {
