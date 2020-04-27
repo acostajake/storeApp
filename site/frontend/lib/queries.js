@@ -92,6 +92,32 @@ export const PAGINATION_QUERY = gql`
 `;
 
 // Auth
+export const RESET_MUTATION = gql`
+	mutation RESET_MUTATION(
+		$resetToken: String!
+		$password: String!
+		$confirmPassword: String!
+	) {
+		resetPassword(
+			resetToken: $resetToken
+			password: $password
+			confirmPassword: $confirmPassword
+		) {
+			id
+			name
+			email
+		}
+	}
+`;
+
+export const REQUEST_RESET_MUTATION = gql`
+	mutation REQUEST_RESET_MUTATION($email: String!) {
+		requestReset(email: $email) {
+			message
+		}
+	}
+`;
+
 export const SIGNUP_MUTATION = gql`
 	mutation SIGNUP_MUTATION(
 		$name: String!

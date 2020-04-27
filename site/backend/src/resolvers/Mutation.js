@@ -1,6 +1,8 @@
 // Info arg for mutations returns the query expected as defined in frontend
 
 const bcrypt = require('bcryptjs');
+const { randomBytes } = require('crypto');
+const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 
 const successToken = (ctx, user) => {
@@ -37,6 +39,41 @@ const Mutations = {
 			},
 			info
 		);
+	},
+	async resetPassword(parent, args, ctx, info) {
+		if (args.password !== args.confirmPassword) {
+			throw new Error('Your passwords do not match. ');
+		}
+		const [user] = await ctx.db.query.users({
+			where: {
+				resetToken: args.resetToken,
+				resetTokenExpiry_gte: Date.now() - 3600000,
+			},
+		});
+		if (!user) {
+			throw new Error('This token is invalid or expired');
+		}
+		const password = await bcrypt.hash(args.password, 10);
+		const updatedUser = await ctx.db.mutation.updateUser({
+			where: { email: user.email },
+			data: { password, resetToken: null, resetTokenExpiry: null },
+		});
+		const token = jwt.sign({ userId: updatedUser.id }, process.env.APP_SECRET);
+		const withToken = successToken(ctx, updatedUser);
+		return withToken;
+	},
+	async requestReset(parent, args, ctx, info) {
+		const user = await ctx.db.query.user({ where: { email: args.email } });
+		if (!user) {
+			throw new Error(`Account not found for ${email}`);
+		}
+		const resetToken = (await promisify(randomBytes)(20)).toString('hex');
+		const resetTokenExpiry = Date.now() + 3600000;
+		const res = await ctx.db.mutation.updateUser({
+			where: { email: args.email },
+			data: { resetToken, resetTokenExpiry },
+		});
+		return { message: 'Check your email!' };
 	},
 	async signup(parent, args, ctx, info) {
 		args.email = args.email.toLowerCase();

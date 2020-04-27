@@ -40,7 +40,7 @@ const Signup = () => {
 							<h2>Create an account</h2>
 							<Error error={error} />
 							<label htmlFor='name'>
-								name
+								Username
 								<input
 									type='text'
 									name='name'
@@ -50,7 +50,7 @@ const Signup = () => {
 								/>
 							</label>
 							<label htmlFor='email'>
-								email
+								Email
 								<input
 									type='email'
 									name='email'
@@ -60,7 +60,7 @@ const Signup = () => {
 								/>
 							</label>
 							<label htmlFor='password'>
-								password
+								Password
 								<input
 									type='password'
 									name='password'
