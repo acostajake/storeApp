@@ -7,7 +7,6 @@ import Form from './styles/Form';
 import { CURRENT_USER, RESET_MUTATION } from '../lib/queries';
 
 const Reset = (props) => {
-	console.log(props.resetToken);
 	const [resetInfo, setResetInfo] = useState({
 		password: '',
 		confirmPassword: '',
@@ -39,7 +38,7 @@ const Reset = (props) => {
 						<fieldset disabled={loading} aria-busy={loading}>
 							<h2>Reset your password</h2>
 							{!error && !loading && called && (
-								<p>Success! Use the link sent to your email to reset.</p>
+								<p>Success! You're logged in now.</p>
 							)}
 							<label htmlFor='password'>
 								Password
