@@ -5,6 +5,7 @@ const { randomBytes } = require('crypto');
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 
+const { hasPermission } = require('../utils');
 const { makeEmail, transport } = require('../mail');
 
 const successToken = (ctx, user) => {
@@ -18,9 +19,18 @@ const successToken = (ctx, user) => {
 
 const Mutations = {
 	async createItem(parent, args, ctx, info) {
+		if (!ctx.request.userId) {
+			throw new Error('You need to log in to create items.');
+		}
 		const item = await ctx.db.mutation.createItem(
 			{
-				data: { ...args },
+				//  create relationship between item and user w connect
+				data: {
+					...args,
+					user: {
+						connect: { id: ctx.request.userId },
+					},
+				},
 			},
 			info
 		);
@@ -28,7 +38,15 @@ const Mutations = {
 	},
 	async deleteItem(parent, args, ctx, info) {
 		const where = { id: args.id };
-		const item = await ctx.db.query.item({ where }, `{ id title }`);
+		const item = await ctx.db.query.item({ where }, `{ id title user {id } }`);
+		const isItemSeller = item.user.id === ctx.request.userId;
+		const hasPermission = ctx.request.user.permissions.some((permission) => [
+			'ADMIN',
+			'ITEMDELETE',
+		]);
+		if (!isItemSeller && !hasPermission) {
+			throw new Error('You need a permission to delete');
+		}
 		return ctx.db.mutation.deleteItem({ where }, info);
 	},
 	updateItem(parent, args, ctx, info) {
@@ -117,6 +135,29 @@ const Mutations = {
 	async signout(parent, args, ctx, info) {
 		ctx.response.clearCookie('token');
 		return { message: 'Signed out! ' };
+	},
+	async updatePermissions(parent, args, ctx, info) {
+		console.log('pppppppppppp', args);
+		if (!ctx.request.userId) {
+			throw new Error('You must be logged in');
+		}
+		const currentUser = await ctx.db.query.user(
+			{ where: { id: ctx.request.userId } },
+			info
+		);
+		hasPermission(currentUser, ['ADMIN', 'PERMISSIONUPDATE']);
+		return ctx.db.mutation.updateUser(
+			{
+				// custom enum requires set rather than passing arg permissions directly
+				data: {
+					permissions: {
+						set: args.permissions,
+					},
+				},
+				where: { id: args.userId },
+			},
+			info
+		);
 	},
 };
 

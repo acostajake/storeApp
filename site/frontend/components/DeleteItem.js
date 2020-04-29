@@ -23,7 +23,7 @@ class DeleteItem extends React.Component {
 					<button
 						onClick={() => {
 							if (confirm('Ready to delete?')) {
-								deleteItem();
+								deleteItem().catch((error) => alert(error.message));
 							}
 						}}
 					>

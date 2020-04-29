@@ -1,5 +1,7 @@
 const { forwardTo } = require('prisma-binding');
 
+const { hasPermission } = require('../utils');
+
 // If query same for server and Prisma, can forward query
 
 const Query = {
@@ -17,6 +19,14 @@ const Query = {
 			return null;
 		}
 		return ctx.db.query.user({ where: { id: ctx.request.userId } }, info);
+	},
+	async users(parent, args, ctx, info) {
+		if (!ctx.request.userId) {
+			throw new Error('You must log in to continue');
+		}
+		hasPermission(ctx.request.user, ['ADMIN', 'PERMISSIONUPDATE']);
+		// return info w gql fields requested from client side
+		return ctx.db.query.users({}, info);
 	},
 };
 
