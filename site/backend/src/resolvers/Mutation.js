@@ -18,6 +18,36 @@ const successToken = (ctx, user) => {
 };
 
 const Mutations = {
+	async addToCart(parent, args, ctx, info) {
+		const { userId } = ctx.request;
+		if (!userId) {
+			throw new Error('You gotta log in!');
+		}
+		const [existingCartItem] = await ctx.db.query.cartItems({
+			where: {
+				user: { id: userId.id },
+				item: { id: args.id },
+			},
+		});
+		if (existingCartItem) {
+			return ctx.db.mutation.updateCartItem(
+				{
+					where: { id: existingCartItem.id },
+					data: { quantity: existingCartItem.quantity + 1 },
+				},
+				info
+			);
+		}
+		return ctx.db.mutation.createCartItem(
+			{
+				data: {
+					user: { conect: { id: userId } },
+					item: { conect: { id: args.id } },
+				},
+			},
+			info
+		);
+	},
 	async createItem(parent, args, ctx, info) {
 		if (!ctx.request.userId) {
 			throw new Error('You need to log in to create items.');
