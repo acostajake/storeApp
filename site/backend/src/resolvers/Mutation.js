@@ -41,12 +41,27 @@ const Mutations = {
 		return ctx.db.mutation.createCartItem(
 			{
 				data: {
-					user: { conect: { id: userId } },
-					item: { conect: { id: args.id } },
+					user: { connect: { id: userId } },
+					item: { connect: { id: args.id } },
 				},
 			},
 			info
 		);
+	},
+	async removeFromCart(parent, args, ctx, info) {
+		const itemToRemove = await ctx.db.query.cartItem(
+			{
+				where: {
+					id: args.id,
+				},
+			},
+			`{ id, user { id }}`
+		);
+		if (!itemToRemove) throw new Error('No item found');
+		if (itemToRemove.user.id !== ctx.request.userId) {
+			throw new Error('You must own your cart to remove an item');
+		}
+		return ctx.db.mutation.deleteCartItem({ where: { id: args.id } }, info);
 	},
 	async createItem(parent, args, ctx, info) {
 		if (!ctx.request.userId) {

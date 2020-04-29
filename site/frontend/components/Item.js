@@ -31,7 +31,7 @@ const Item = (props) => {
 				<Link href={{ pathname: 'update', query: { id } }}>
 					<a>Edit Item</a>
 				</Link>
-				<AddToCart id={item.id} />
+				<AddToCart id={id} />
 				<DeleteItem id={id}>Delete Item</DeleteItem>
 			</div>
 		</ItemStyles>

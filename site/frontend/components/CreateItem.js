@@ -74,6 +74,7 @@ const CreateItem = () => {
 						<label htmlFor='title'>
 							Title
 							<input
+								disabled={loading}
 								type='text'
 								id='title'
 								name='title'
