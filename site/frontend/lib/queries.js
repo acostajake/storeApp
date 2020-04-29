@@ -150,12 +150,34 @@ export const SIGNOUT_MUTATION = gql`
 	}
 `;
 
+export const UPDATE_PERMISSIONS_MUTATION = gql`
+	mutation updatePermissions($permissions: [Permission], $userId: ID!) {
+		updatePermissions(permissions: $permissions, userId: $userId) {
+			id
+			permissions
+			name
+			email
+		}
+	}
+`;
+
 export const CURRENT_USER = gql`
 	query {
 		me {
 			id
 			email
 			name
+			permissions
+		}
+	}
+`;
+
+export const GET_ALL_USERS = gql`
+	query {
+		users {
+			id
+			name
+			email
 			permissions
 		}
 	}

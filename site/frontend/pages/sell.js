@@ -1,8 +1,12 @@
 import CreateItem from '../components/CreateItem';
 
+import SignInWrapper from '../components/SignInWrapper';
+
 const Sell = (props) => (
 	<div>
-		<CreateItem />
+		<SignInWrapper>
+			<CreateItem />
+		</SignInWrapper>
 	</div>
 );
 

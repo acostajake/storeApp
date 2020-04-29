@@ -4,6 +4,7 @@ import { Mutation } from 'react-apollo';
 
 import { CREATE_ITEM_MUTATION } from '../lib/queries';
 import Form from './styles/Form';
+import Error from './ErrorMessage';
 
 const CreateItem = () => {
 	const [item, setItemDetails] = useState({
@@ -42,7 +43,7 @@ const CreateItem = () => {
 	};
 
 	return (
-		<Mutation mutation={CREATE_ITEM_MUTATION} variables={item}>
+		<Mutation mutation={CREATE_ITEM_MUTATION} variables={{ ...item }}>
 			{(createItem, { loading, error }) => (
 				<Form
 					onSubmit={async (e) => {
@@ -55,6 +56,7 @@ const CreateItem = () => {
 					}}
 				>
 					<h2>Sell Item</h2>
+					<Error error={error} />
 					<fieldset disabled={loading} aria-busy={loading}>
 						<label htmlFor='image'>
 							Add Image
