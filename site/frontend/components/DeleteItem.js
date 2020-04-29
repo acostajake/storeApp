@@ -1,7 +1,11 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
 
-import { DELETE_ITEM_MUTATION, GET_ALL_ITEMS } from '../lib/queries';
+import {
+	CURRENT_USER,
+	DELETE_ITEM_MUTATION,
+	GET_ALL_ITEMS,
+} from '../lib/queries';
 
 // TODO: Swap for React Hook AFTER updating react-apollo w Client
 class DeleteItem extends React.Component {
@@ -18,6 +22,7 @@ class DeleteItem extends React.Component {
 				mutation={DELETE_ITEM_MUTATION}
 				variables={{ id: this.props.id }}
 				update={this.update}
+				refetchQueries={[{ query: CURRENT_USER }]}
 			>
 				{(deleteItem, { error }) => (
 					<button

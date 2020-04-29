@@ -8,6 +8,7 @@ type SuccessMessage {
 
 type Mutation {
 	addToCart(id: ID!): CartItem
+	removeFromCart(id: ID!): CartItem
 	createItem(
 		title: String
 		desc: String

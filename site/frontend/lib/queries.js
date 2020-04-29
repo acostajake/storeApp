@@ -55,6 +55,14 @@ export const ADD_TO_CART = gql`
 	}
 `;
 
+export const REMOVE_FROM_CART = gql`
+	mutation removeFromCart($id: ID!) {
+		removeFromCart(id: $id) {
+			id
+		}
+	}
+`;
+
 export const TOGGLE_CART_MUTATION = gql`
 	mutation {
 		toggleCart @client
@@ -189,6 +197,17 @@ export const CURRENT_USER = gql`
 			email
 			name
 			permissions
+			cart {
+				id
+				quantity
+				item {
+					id
+					price
+					image
+					title
+					desc
+				}
+			}
 		}
 	}
 `;
