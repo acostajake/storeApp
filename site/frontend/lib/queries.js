@@ -46,6 +46,21 @@ export const UPDATE_ITEM_MUTATION = gql`
 	}
 `;
 
+export const ADD_TO_CART = gql`
+	mutation addToCart($id: ID!) {
+		addToCart(id: $id) {
+			id
+			quantity
+		}
+	}
+`;
+
+export const TOGGLE_CART_MUTATION = gql`
+	mutation {
+		toggleCart @client
+	}
+`;
+
 export const GET_ALL_ITEMS = gql`
 	query GET_ALL_ITEMS($skip: Int = 0, $first: Int = ${perPage}) {
 		items(first: $first, skip: $skip, orderBy: createdAt_DESC) {
@@ -88,6 +103,12 @@ export const PAGINATION_QUERY = gql`
 				count
 			}
 		}
+	}
+`;
+
+export const LOCAL_STATE_QUERY = gql`
+	query {
+		cartOpen @client
 	}
 `;
 
