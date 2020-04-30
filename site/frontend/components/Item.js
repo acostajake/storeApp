@@ -2,6 +2,7 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import formatMoney from '../lib/formatMoney';
 import AddToCart from './AddToCart';
 import ItemStyles from './styles/ItemStyles';
 import DeleteItem from './DeleteItem';
@@ -25,7 +26,7 @@ const Item = (props) => {
 					<a>{title}</a>
 				</Link>
 			</Title>
-			<PriceTag>${price}</PriceTag>
+			<PriceTag>{formatMoney(price)}</PriceTag>
 			<p>{desc}</p>
 			<div className='buttonList'>
 				<Link href={{ pathname: 'update', query: { id } }}>

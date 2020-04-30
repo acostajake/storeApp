@@ -2,6 +2,7 @@ import Router from 'next/router';
 import React, { useState } from 'react';
 import { Mutation } from 'react-apollo';
 
+import formatMoney from '../lib/formatMoney';
 import { CREATE_ITEM_MUTATION } from '../lib/queries';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
