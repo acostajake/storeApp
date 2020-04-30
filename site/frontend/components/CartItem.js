@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 
+import formatMoney from '../lib/formatMoney';
 import RemoveFromCart from './RemoveFromCart';
 
 const CartItemStyles = styled.li`
@@ -33,10 +34,10 @@ const CartItem = ({ cartItem }) => {
 			<div className='cart-item-details'>
 				<h3>{cartItem.item.title}</h3>
 				<p>
-					Total ${cartItem.item.price * cartItem.quantity}
+					{formatMoney(cartItem.item.price * cartItem.quantity)}
 					{' - '}
 					<em>
-						{cartItem.quantity}&times;{cartItem.item.price}/ea
+						{cartItem.quantity} &times; {formatMoney(cartItem.item.price)} each
 					</em>
 				</p>
 			</div>

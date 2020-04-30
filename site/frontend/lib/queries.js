@@ -63,6 +63,20 @@ export const REMOVE_FROM_CART = gql`
 	}
 `;
 
+export const CREATE_ORDER = gql`
+	mutation createOrder($token: String!) {
+		createOrder(token: $token) {
+			id
+			charge
+			total
+			items {
+				id
+				title
+			}
+		}
+	}
+`;
+
 export const TOGGLE_CART_MUTATION = gql`
 	mutation {
 		toggleCart @client

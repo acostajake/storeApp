@@ -4,12 +4,15 @@ import { Mutation, Query } from 'react-apollo';
 
 import { LOCAL_STATE_QUERY, TOGGLE_CART_MUTATION } from '../lib/queries';
 import calcTotalPrice from '../lib/calcTotalPrice';
+import formatMoney from '../lib/formatMoney';
 
-import CartItem from './CartItem';
 import Button from './styles/SickButton';
 import CartStyles from './styles/CartStyles';
 import CloseButton from './styles/CloseButton';
 import Supreme from './styles/Supreme';
+
+import CartItem from './CartItem';
+import Payment from './Payment';
 import User from './User';
 
 const Composed = adopt({
@@ -43,8 +46,12 @@ const Cart = () => (
 						))}
 					</ul>
 					<footer>
-						<p>${calcTotalPrice(me.cart)}</p>
-						<Button>Checkout</Button>
+						<p>{formatMoney(calcTotalPrice(me.cart))}</p>
+						{me.cart.length && (
+							<Payment>
+								<Button>Checkout</Button>
+							</Payment>
+						)}
 					</footer>
 				</CartStyles>
 			);
