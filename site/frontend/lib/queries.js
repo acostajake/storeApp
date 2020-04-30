@@ -104,6 +104,20 @@ export const GET_ITEM_WITH_IMAGE = gql`
 	}
 `;
 
+export const SEARCH_FOR_ITEM = gql`
+	query SEARCH_FOR_ITEM($searchTerm: String!) {
+		items(
+			where: {
+				OR: [{ title_contains: $searchTerm }, { desc_contains: $searchTerm }]
+			}
+		) {
+			id
+			title
+			image
+		}
+	}
+`;
+
 export const PAGINATION_QUERY = gql`
 	query PAGINATION_QUERY {
 		itemsConnection {

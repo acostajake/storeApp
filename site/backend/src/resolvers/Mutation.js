@@ -182,7 +182,6 @@ const Mutations = {
 		return { message: 'Signed out! ' };
 	},
 	async updatePermissions(parent, args, ctx, info) {
-		console.log('pppppppppppp', args);
 		if (!ctx.request.userId) {
 			throw new Error('You must be logged in');
 		}

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import Cart from './Cart';
 import Nav from './Nav';
+import SearchBar from './SearchBar';
 
 const Logo = styled.h1`
 	font-size: 3rem;
@@ -48,7 +49,7 @@ const Header = () => (
 			<Nav />
 		</div>
 		<div className='sub-bar'>
-			<p>Search</p>
+			<SearchBar />
 		</div>
 		<div className='bar'>
 			<Cart />
