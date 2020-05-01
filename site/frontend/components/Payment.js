@@ -16,12 +16,18 @@ function totalItems(cart) {
 
 const Payment = (props) => {
 	const onToken = async (res, createOrder) => {
+		NProgress.start();
 		const order = await createOrder({
 			variables: {
 				token: res.id,
 			},
+		}).catch((err) => {
+			alert(err.message);
 		});
-		console.log(order);
+		Router.push({
+			pathname: '/order',
+			query: { id: order.data.createOrder.id },
+		});
 	};
 
 	return (

@@ -23,7 +23,6 @@ const Nav = () => (
 			return (
 				<>
 					<NavStyles>
-						<div>{`Logged in as ${me && me.name}`}</div>
 						<Link href='/store'>
 							<a>Store</a>
 						</Link>
