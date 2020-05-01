@@ -36,6 +36,8 @@ type Order {
 	total: Int!
 	user: User!
 	charge: String!
+	createdAt: DateTime! @createdAt
+	updatedAt: DateTime! @updatedAt
 }
 
 type OrderItem {
@@ -58,4 +60,6 @@ type User {
 	resetTokenExpiry: Float
 	permissions: [Permission] @scalarList(strategy: RELATION)
 	cart: [CartItem!]!
+	createdAt: DateTime! @createdAt
+	updatedAt: DateTime! @updatedAt
 }

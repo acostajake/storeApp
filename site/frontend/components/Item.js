@@ -20,7 +20,7 @@ const Item = (props) => {
 				<Link
 					href={{
 						pathname: '/item',
-						query: id,
+						query: { id },
 					}}
 				>
 					<a>{title}</a>
