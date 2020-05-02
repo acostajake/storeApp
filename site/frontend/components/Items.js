@@ -2,6 +2,7 @@ import { Query } from 'react-apollo';
 import React from 'react';
 import styled from 'styled-components';
 
+import Error from './ErrorMessage';
 import Item from './Item';
 import Pagination from './Pagination';
 import { GET_ALL_ITEMS } from '../lib/queries';
@@ -35,7 +36,7 @@ class Items extends React.Component {
 				>
 					{({ data, loading, error }) => {
 						if (loading) return 'loading...';
-						if (error) return <div>{error.message}</div>;
+						if (error) return <Error error={error} />;
 						return (
 							<ItemList>
 								{data.items.map((item) => (

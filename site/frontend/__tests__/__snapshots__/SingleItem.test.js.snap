@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SingleItemDisplay/> errors with unfound item id 1`] = `
+<p
+  data-test="graphql-error"
+>
+  <strong>
+    Shoot!
+  </strong>
+  Item not found
+</p>
+`;
+
+exports[`<SingleItemDisplay/> renders with data 1`] = `
+<h2
+  className="details"
+>
+  Viewing 
+  dogs are best
+</h2>
+`;
+
+exports[`<SingleItemDisplay/> renders with data 2`] = `
+<img
+  alt="dogs are best image"
+  src="dog.jpg"
+/>
+`;
+
+exports[`<SingleItemDisplay/> renders with data 3`] = `
+<p>
+  dogs
+</p>
+`;
