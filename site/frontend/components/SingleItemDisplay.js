@@ -34,21 +34,19 @@ const SingleItemDisplay = (props) => {
 			}}
 		>
 			{({ data, error, loading }) => {
-				const {
-					item: { desc, largeImg, title },
-				} = data;
-				if (error) return <ErrorMessage error={error.message} />;
+				if (error) return <ErrorMessage error={error} />;
 				if (loading) return <p>Loading item...</p>;
-				if (!data.item) return <p>Nothing found for {props.id}</p>;
+				const item = data.item;
+				if (!item) return <p>Nothing found for {props.id}</p>;
 				return (
 					<SingleStyle>
 						<Head>
-							<title>Store | {title}</title>
+							<title>Store | {item.title}</title>
 						</Head>
-						<img src={largeImg} alt={`${title} image`} />
+						<img src={item.largeImg} alt={`${item.title} image`} />
 						<div>
-							<h2 className='details'>Viewing {title}</h2>
-							<p>{desc}</p>
+							<h2 className='details'>Viewing {item.title}</h2>
+							<p>{item.desc}</p>
 						</div>
 					</SingleStyle>
 				);

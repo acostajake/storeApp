@@ -15,7 +15,7 @@ const Item = (props) => {
 	} = props;
 	return (
 		<ItemStyles>
-			{image && <img src={image} alt='Wish you could see this!' />}
+			{image && <img src={image} alt={title} />}
 			<Title>
 				<Link
 					href={{
