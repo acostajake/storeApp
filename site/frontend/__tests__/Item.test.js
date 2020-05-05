@@ -15,9 +15,6 @@ const demoItem = {
 const demoWrapper = shallow(<Item item={demoItem} />);
 
 describe('<Item/>', () => {
-	it('renders and matches the snapshot', () => {
-		expect(toJSON(demoWrapper)).toMatchSnapshot();
-	});
 	it('handles the price', () => {
 		const priceTag = demoWrapper.find('PriceTag');
 		expect(priceTag).toHaveLength(1);

@@ -1,4 +1,9 @@
 import casual from 'casual';
+import {
+	CURRENT_USER,
+	PAGINATION_QUERY,
+	REQUEST_RESET_MUTATION,
+} from './queries';
 
 // seed it so we get consistent results
 casual.seed(777);
@@ -76,6 +81,70 @@ class LocalStorageMock {
 	}
 }
 
+const notSignedInMocks = [
+	{
+		request: { query: CURRENT_USER },
+		result: { data: { me: null } },
+	},
+];
+
+const signedInMocks = [
+	{
+		request: { query: CURRENT_USER },
+		result: { data: { me: fakeUser() } },
+	},
+];
+
+const signedInWithCartMocks = [
+	{
+		request: { query: CURRENT_USER },
+		result: {
+			data: {
+				me: {
+					...fakeUser(),
+					cart: [fakeCartItem(), fakeCartItem(), fakeCartItem()],
+				},
+			},
+		},
+	},
+];
+
+const makeMocksFor = (length) => {
+	return [
+		{
+			request: { query: PAGINATION_QUERY },
+			result: {
+				data: {
+					itemsConnection: {
+						__typename: 'aggregate',
+						aggregate: {
+							__typename: 'count',
+							count: length,
+						},
+					},
+				},
+			},
+		},
+	];
+};
+
+const requestResetMock = [
+	{
+		request: {
+			query: REQUEST_RESET_MUTATION,
+			variables: { email: 'test@fakeemail.com' },
+		},
+		result: {
+			data: {
+				requestReset: {
+					message: 'success',
+					__typename: 'Message',
+				},
+			},
+		},
+	},
+];
+
 export {
 	LocalStorageMock,
 	fakeItem,
@@ -83,4 +152,9 @@ export {
 	fakeCartItem,
 	fakeOrder,
 	fakeOrderItem,
+	notSignedInMocks,
+	requestResetMock,
+	signedInMocks,
+	signedInWithCartMocks,
+	makeMocksFor,
 };
