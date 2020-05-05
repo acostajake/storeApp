@@ -14,6 +14,7 @@ const RequestReset = () => {
 			{(requestReset, { called, error, loading }) => {
 				return (
 					<Form
+						data-test='form'
 						method='POST'
 						onSubmit={async (e) => {
 							e.preventDefault();

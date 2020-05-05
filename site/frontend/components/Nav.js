@@ -22,7 +22,7 @@ const Nav = () => (
 			const me = user.data.me;
 			return (
 				<>
-					<NavStyles>
+					<NavStyles data-test='nav'>
 						<Link href='/store'>
 							<a>Store</a>
 						</Link>
