@@ -16,7 +16,7 @@ const OrderUl = styled.ul`
 	grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
 `;
 
-const OrderList = (props) => {
+const OrderList = () => {
 	return (
 		<User>
 			{({ data: { me } }) => (
