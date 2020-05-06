@@ -14,8 +14,8 @@ function totalItems(cart) {
 	return cart.reduce((total, item) => total + item.quantity, 0);
 }
 
-const Payment = (props) => {
-	const onToken = async (res, createOrder) => {
+class Payment extends React.Component {
+	onToken = async (res, createOrder) => {
 		NProgress.start();
 		const order = await createOrder({
 			variables: {
@@ -29,32 +29,39 @@ const Payment = (props) => {
 			query: { id: order.data.createOrder.id },
 		});
 	};
-
-	return (
-		<User>
-			{({ data: { me } }) => (
-				<Mutation
-					mutation={CREATE_ORDER}
-					refetchQueries={[{ query: CURRENT_USER }]}
-				>
-					{(createOrder) => (
-						<StripeCheckout
-							amount={calcTotalPrice(me.cart)}
-							currency='USD'
-							description={`Order of ${totalItems(me.cart)} items`}
-							email={me.email}
-							image={me.cart.length && me.cart[0].item && me.cart[0].item.image}
-							name='art-sale'
-							stripeKey='pk_test_JJDkY4glpzPgjzLy5U7GMrQP00b34T6xTV'
-							token={(res) => onToken(res, createOrder)}
+	render() {
+		return (
+			<User>
+				{({ data: { me }, loading, error }) => {
+					if (loading) return null;
+					if (error) return <Error eror={error} />;
+					return (
+						<Mutation
+							mutation={CREATE_ORDER}
+							refetchQueries={[{ query: CURRENT_USER }]}
 						>
-							{props.children}
-						</StripeCheckout>
-					)}
-				</Mutation>
-			)}
-		</User>
-	);
-};
+							{(createOrder) => (
+								<StripeCheckout
+									amount={calcTotalPrice(me.cart)}
+									currency='USD'
+									description={`Order of ${totalItems(me.cart)} items`}
+									email={me.email}
+									image={
+										me.cart.length && me.cart[0].item && me.cart[0].item.image
+									}
+									name='art-sale'
+									stripeKey='pk_test_JJDkY4glpzPgjzLy5U7GMrQP00b34T6xTV'
+									token={(res) => this.onToken(res, createOrder)}
+								>
+									{this.props.children}
+								</StripeCheckout>
+							)}
+						</Mutation>
+					);
+				}}
+			</User>
+		);
+	}
+}
 
 export default Payment;

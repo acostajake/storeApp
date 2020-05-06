@@ -17,7 +17,7 @@ const Order = (props) => {
 				if (loading) return <p>Loading...</p>;
 				const order = data.order;
 				return (
-					<OrderStyles>
+					<OrderStyles data-test='order'>
 						<Head>
 							<title>Maker Store | Order</title>
 						</Head>
@@ -32,7 +32,13 @@ const Order = (props) => {
 						<p>
 							<span>Ordered at:</span>
 							<span>
-								{format(Date.parse(order.createdAt), 'MMMM d, yyyy h:mm a')}
+								{
+									(format(order.createdAt),
+									'MMMM d, yyyy h:mm a',
+									{
+										awareOfUnicodeTokens: true,
+									})
+								}
 							</span>
 						</p>
 						<p>
